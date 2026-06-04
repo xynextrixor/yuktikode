@@ -50,13 +50,18 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         ////validata token 
-
-        //tolen add in dung redis ke blcok list me
+        const token = req.cookies.token;
+        const payload = jwt.decode(token);
+        await redisClient.set(`token:${payload._id}`, token);
+        await redisClient.expire(`token:${payload._id}`, 60 * 60);
+        res.cookie("token", new Date(Date.now()));
+        //token add in denied redis black list
 
 
     }
     catch (err) {
+        res.status(400).json({ error: err.message });
 
     }
 }
-module.exports = { register, login };
+module.exports = { register, login, logout };

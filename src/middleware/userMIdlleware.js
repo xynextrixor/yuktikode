@@ -21,3 +21,6 @@ const userMiddelware = async (req, res, next) => {
         res.status(401).json({ error: err.message });
     }
 }
+
+
+module.exports = userMiddelware;

@@ -9,18 +9,24 @@ app.use(express.json());
 app.use(cookieParser());
 
 const initializeConnection = async () => {
-    try {
-        await Promise.all([main(), redisClient.connect()]);
-        console.log('Connected to MongoDB and Redis');
+    const results = await Promise.allSettled([main(), redisClient.connect()]);
 
-        const port = process.env.PORT || 3000;
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
-        });
-    } catch (err) {
-        console.error('Failed to connect to MongoDB or Redis', err);
-        process.exit(1);
+    if (results[0].status === 'fulfilled') {
+        console.log('Connected to MongoDB');
+    } else {
+        console.error('MongoDB connection failed:', results[0].reason);
     }
+
+    if (results[1].status === 'fulfilled') {
+        console.log('Connected to Redis');
+    } else {
+        console.error('Redis connection failed:', results[1].reason);
+    }
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
 };
 
 initializeConnection();
