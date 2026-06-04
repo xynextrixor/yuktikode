@@ -43,6 +43,20 @@ const login = async (req, res) => {
         res.status(200).json({ message: "Login successful", user, token });
     }
     catch (error) {
-        res.status(400).send({ "unotharize ace"});
+        res.status(400).send("unotharize ace");
     }
 }
+
+const logout = async (req, res) => {
+    try {
+        ////validata token 
+
+        //tolen add in dung redis ke blcok list me
+
+
+    }
+    catch (err) {
+
+    }
+}
+module.exports = { register, login };
