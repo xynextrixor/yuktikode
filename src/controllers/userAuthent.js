@@ -14,7 +14,7 @@ const register = async (req, res) => {
         const { firstName, emailId, password } = req.body;
 
         req.body.password = await bcrypt.hash(password, 10);
-        req.body.role = 'user'
+        req.body.role = 'user';
         //
 
         const user = await User.create(req.body);
@@ -98,7 +98,42 @@ const logout = async (req, res) => {
     }
 }
 
+const adminRegister = async (req, res) => {
+
+
+    try {
+        // validate the data;
+        if (req.result.role !== "admin") {
+            throw new Error("You are not an admin");
+        }
+        validate(req.body);
+        const { firstName, emailId, password } = req.body;
+
+        req.body.password = await bcrypt.hash(password, 10);
+        req.body.role = 'admin';
+        //
+
+        const user = await User.create(req.body);
+        const token = jwt.sign({ _id: user._id, emailId: emailId, role: 'admin' }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        const reply = {
+            firstName: user.firstName,
+            emailId: user.emailId,
+            _id: user._id,
+            role: user.role,
+        }
+
+        res.cookie('token', token, { maxAge: 60 * 60 * 1000 });
+        res.status(201).json({
+            user: reply,
+            message: "Loggin Successfully"
+        })
+    }
+    catch (err) {
+        res.status(400).send("Error: " + err);
+    }
+}
+// validate the data;
 
 
 
-module.exports = { register, login, logout };
+module.exports = { register, login, logout, adminRegister };
