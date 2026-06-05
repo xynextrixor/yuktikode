@@ -1,5 +1,5 @@
 
-const getLanguageById = require('../utils/ProblemUtlitiy');
+const { getLanguageById, submitBatch } = require('../utils/ProblemUtlitiy');
 const createProblem = async (req, res) => {
     const { tittle, description, difficulty, tags,
         visibleTestCases, hiddenTestCases,
@@ -21,6 +21,10 @@ const createProblem = async (req, res) => {
                 stdin: input,
                 expected_output: output
             }));
+
+
+
+            const submitResult = await submitBatch(submission);
         }
     }
     catch (error) {
