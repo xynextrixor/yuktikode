@@ -31,9 +31,43 @@ const problemSchema = new Schema({
             output: {
                 type: String,
                 required: true
+            },
+            explanation: {
+                type: String,
+                required: true
             }
         }
-    ]
+    ],
+    hiddenTestCases: [
 
-
+        {
+            input: {
+                type: String,
+                required: true
+            },
+            output: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    starterCode: [{
+        language: {
+            type: String,
+            enum: ['javascript', 'python', 'java', 'c++', 'c#', 'ruby', 'go', 'swift', 'kotlin'],
+            required: true
+        },
+        initialcode: {
+            type: String,
+            required: true
+        }
+    }],
+    problemCreator: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    }
 })
+const Problem = mongoose.model("problem", problemSchema);
+
+module.exports = Problem;
