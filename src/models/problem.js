@@ -20,7 +20,6 @@ const problemSchema = new Schema({
         enum: ['arrays', 'strings', 'linked lists', 'trees', 'graphs', 'dynamic programming', 'greedy algorithms', 'backtracking', 'divide and conquer', 'bit manipulation'],
         required: true
     },
-
     visibleTestCases: [
 
         {
@@ -58,6 +57,17 @@ const problemSchema = new Schema({
             required: true
         },
         initialcode: {
+            type: String,
+            required: true
+        }
+    }],
+    referenceSolution: [{
+        language: {
+            type: String,
+            enum: ['javascript', 'python', 'java', 'c++', 'c#', 'ruby', 'go', 'swift', 'kotlin'],
+            required: true
+        },
+        completeCode: {
             type: String,
             required: true
         }
