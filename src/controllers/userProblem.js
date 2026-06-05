@@ -13,13 +13,14 @@ const createProblem = async (req, res) => {
             ////stdin
             //expected output
             // ...
+            /// iAM CRETEING ANS BACTCH DATABASE FOR EACH TEST CASE
             const language = getLanguageById(language);
-            const submission = visibleTestCases.map(input, output) = {
-                source_code = completeCode,
-                language_id = language,
-                stdin = input,
-                expected_output = output
-            }
+            const submission = visibleTestCases.map((input, output) => ({
+                source_code: completeCode,
+                language_id: language,
+                stdin: input,
+                expected_output: output
+            }));
         }
     }
     catch (error) {
