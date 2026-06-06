@@ -39,7 +39,6 @@ async function fetchData() {
     }
 
     return await fetchData();
-
 }
 
 

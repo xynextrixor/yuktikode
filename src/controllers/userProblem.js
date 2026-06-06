@@ -15,11 +15,11 @@ const createProblem = async (req, res) => {
             // ...
             /// iAM CRETEING ANS BACTCH DATABASE FOR EACH TEST CASE
             const language = getLanguageById(language);
-            const submission = visibleTestCases.map((input, output) => ({
+            const submission = visibleTestCases.map((testcase) => ({
                 source_code: completeCode,
                 language_id: language,
-                stdin: input,
-                expected_output: output
+                stdin: testcase.input,
+                expected_output: testcase.output
             }));
 
 
