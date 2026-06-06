@@ -1,7 +1,8 @@
 const axios = require('axios');
+const { set } = require('mongoose');
 
 
-const getlanauageById = (lang) => {
+const getLanguageById = (lang) => {
     const language = {
         "c++": 54,
         "java": 62,
@@ -28,8 +29,27 @@ const submitBatch = (submssion) => {
 
     }
 }
+const waiting = async (timer) => {
+    setTimeout(() => {
+        return 1;
+    }, timer);
+}
 
-async function fetchData() {
+const submitToken = async (tokens) => {
+    const options = {
+        method: 'GET',
+        url: 'https://judge0-ce.p.rapidapi.com/submissions',
+        params: {
+            tokens: resultToken.join(','),
+            base64_encoded: 'true',
+            fields: '*'
+        },
+        headers: {
+            "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+            "x-rapidapi-key": process.env.JUDGE0_API_KEY
+        }
+    };
+
     try {
         const response = await axios.request(options);
         return response.data()
@@ -37,11 +57,18 @@ async function fetchData() {
     catch (error) {
         console.log(error)
     }
+    while (true) {
+        const result = await fetchData();
+        const IsResultObtained = result.submssion.every((r) => r.status_id > 2)
+        if (!IsResultObtained)
+            return result.submssion;
 
-    return await fetchData();
+        await waiting(1000);
+
+    }
+
 }
 
 
 
-
-module.exports = { getlanauageById, submitBatch };
+module.exports = { getLanguageById, submitBatch, submitToken };

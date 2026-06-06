@@ -1,4 +1,5 @@
 
+const { response } = require('express');
 const { getLanguageById, submitBatch } = require('../utils/ProblemUtlitiy');
 const createProblem = async (req, res) => {
     const { tittle, description, difficulty, tags,
@@ -25,6 +26,15 @@ const createProblem = async (req, res) => {
 
 
             const submitResult = await submitBatch(submission);
+            const resultToken = submitResult.map((value) => value.token);
+            const testResult = await submitToken(resultToken);
+            for (const test of testResult) {
+                if (test.status_id !== 3) {
+                    //handle the error case
+                    return response.status(400).json({ error: 'Reference solution failed for a test case' });
+
+                }
+            }
         }
     }
     catch (error) {
