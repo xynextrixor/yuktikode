@@ -37,8 +37,10 @@ async function fetchData() {
     catch (error) {
         console.log(error)
     }
+
+    return await fetchData();
+
 }
-fetchData();
 
 
 
