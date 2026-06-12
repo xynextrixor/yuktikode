@@ -5,6 +5,7 @@ const main = require('./config/db')
 const cookieParser = require('cookie-parser');
 const authRouter = require("./routes/userAuth");
 const redisClient = require('./config/redis');
+const problemRouter = require('./routes/problemCerator');
 const cors = require('cors')
 
 // console.log("Hello")
