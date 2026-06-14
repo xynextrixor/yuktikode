@@ -13,16 +13,14 @@ function Signup() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(signupSchema),
-  });
+  } = useForm({ resolver: zodResolver(signupSchema) });
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-400 px-4 border border-black">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 border border-black">
       {" "}
       <div className="w-full max-w-md bg-white rounded-2xl  border border-black  p-8">
         {" "}
@@ -83,11 +81,9 @@ function Signup() {
             Create Account
           </button>
 
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <p className="text-center text-sm  text-gray-500 mt-4">
             Already have an account?
-            <span className="text-black font-semibold cursor-pointer ml-1">
-              Login
-            </span>
+            <button class="btn btn-active btn-primary ml-2 p-3">Login</button>
           </p>
         </form>
       </div>
