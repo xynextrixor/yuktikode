@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
+import { store } from "../store/store";
+import { checkAuth } from "../authSlice";
+import { Navigate } from "react-router-dom";
 
 const loginSchema = z.object({
   emailId: z.string().email("Invalid email address"),
@@ -16,9 +20,11 @@ function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  useEffect(() => {
+    if (isAuthencated) {
+      Navigate("/");
+    }
+  }, [isAuthencated]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
